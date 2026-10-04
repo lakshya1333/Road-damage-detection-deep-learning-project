@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+
+# Data and generated outputs
+data/raw/
+data/processed/
+runs/
+outputs/
+*.pt
+*.pth
+*.onnx
+
+# Notebooks and editor files
+.ipynb_checkpoints/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
