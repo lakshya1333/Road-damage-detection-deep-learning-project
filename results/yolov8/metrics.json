@@ -1,0 +1,113 @@
+{
+  "model": "YOLOv8s",
+  "family": "One-stage object detector",
+  "task": "full-image damage detection",
+  "params": 11137148,
+  "latency_ms_bs1": 22.936533966640127,
+  "device": "Tesla T4",
+  "train_minutes": 216.53919212023416,
+  "config": {
+    "base": "yolov8s.pt",
+    "epochs": 25,
+    "imgsz": 640,
+    "batch": 16,
+    "optimizer": "Ultralytics auto (SGD/AdamW)",
+    "schedule": "cosine",
+    "conf": 0.25,
+    "augmentation": "mosaic (off last 5 epochs), HSV, scale/translate, horizontal flip; no vertical flip/rotation",
+    "background_fraction": 0.3,
+    "seed": 42
+  },
+  "detection_test": {
+    "precision": 0.6163297703074662,
+    "recall": 0.5084214331172189,
+    "mAP50": 0.5419225194155917,
+    "mAP50_95": 0.27278138956020814,
+    "per_class_AP50": {
+      "D00": 0.5476293462127146,
+      "D10": 0.5280635333247263,
+      "D20": 0.6373080958295778,
+      "D40": 0.4546891022953481
+    },
+    "per_class_AP50_95": {
+      "D00": 0.30071822968505324,
+      "D10": 0.24986204506310417,
+      "D20": 0.33820508337890315,
+      "D40": 0.20234020011377218
+    },
+    "speed_ms": {
+      "preprocess": 1.202400813819964,
+      "inference": 8.106807012676482,
+      "loss": 0.001941174718977695,
+      "postprocess": 1.6174442773509892
+    },
+    "f1": 0.5571992528452734
+  },
+  "test": {
+    "n": 8088,
+    "accuracy": 0.5102621167161226,
+    "macro_precision": 0.968896715031095,
+    "macro_recall": 0.49896899377939274,
+    "macro_f1": 0.655895232318878,
+    "weighted_f1": 0.667180313280375,
+    "miss_rate": 0.4736646884272997,
+    "accuracy_on_detected": 0.9694620624853183,
+    "per_class": {
+      "D00": {
+        "precision": 0.973196881091618,
+        "recall": 0.5087898089171975,
+        "f1": 0.6682282081311695,
+        "support": 3925
+      },
+      "D10": {
+        "precision": 0.9727668845315904,
+        "recall": 0.533134328358209,
+        "f1": 0.6887774778249133,
+        "support": 1675
+      },
+      "D20": {
+        "precision": 0.9558011049723757,
+        "recall": 0.5627846454131424,
+        "f1": 0.7084357084357085,
+        "support": 1537
+      },
+      "D40": {
+        "precision": 0.9738219895287958,
+        "recall": 0.3911671924290221,
+        "f1": 0.5581395348837209,
+        "support": 951
+      }
+    },
+    "confusion_matrix": [
+      [
+        1997,
+        22,
+        36,
+        5,
+        1865
+      ],
+      [
+        15,
+        893,
+        1,
+        0,
+        766
+      ],
+      [
+        37,
+        3,
+        865,
+        5,
+        627
+      ],
+      [
+        3,
+        0,
+        3,
+        372,
+        573
+      ]
+    ]
+  },
+  "matching": "class-agnostic best IoU >= 0.5 at conf >= 0.25"
+}
