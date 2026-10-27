@@ -1,0 +1,162 @@
+{
+  "model": "ResNet-50",
+  "family": "CNN classifier",
+  "task": "damage-instance classification (GT crop)",
+  "arch": "resnet50",
+  "params": 23516228,
+  "latency_ms_bs1": 6.069225039991579,
+  "device": "Tesla T4",
+  "train_minutes": 33.30028491814931,
+  "epochs_run": 12,
+  "best_val_macro_f1": 0.9391362209799575,
+  "config": {
+    "lr": 0.0002,
+    "weight_decay": 0.0001,
+    "batch": 64,
+    "size": 224,
+    "epochs": 12,
+    "optimizer": "AdamW",
+    "schedule": "cosine",
+    "loss": "class-weighted cross-entropy, label smoothing 0.05",
+    "seed": 42,
+    "pretrained": true,
+    "augmentation": "RandomResizedCrop(0.75-1), HorizontalFlip, ColorJitter"
+  },
+  "samples": {
+    "train": 38741,
+    "val": 8177,
+    "test": 8088
+  },
+  "val": {
+    "n": 8177,
+    "accuracy": 0.9446007093065917,
+    "macro_precision": 0.9391715424575942,
+    "macro_recall": 0.9391304163752277,
+    "macro_f1": 0.9391362209799575,
+    "weighted_f1": 0.9445848142952157,
+    "miss_rate": 0.0,
+    "accuracy_on_detected": 0.9446007093065917,
+    "per_class": {
+      "D00": {
+        "precision": 0.9564208354822074,
+        "recall": 0.9534704370179948,
+        "f1": 0.9549433573635427,
+        "support": 3890
+      },
+      "D10": {
+        "precision": 0.9469866071428571,
+        "recall": 0.9592990390050876,
+        "f1": 0.9531030609379387,
+        "support": 1769
+      },
+      "D20": {
+        "precision": 0.9180645161290323,
+        "recall": 0.9162910495814552,
+        "f1": 0.9171769255559137,
+        "support": 1553
+      },
+      "D40": {
+        "precision": 0.93521421107628,
+        "recall": 0.927461139896373,
+        "f1": 0.931321540062435,
+        "support": 965
+      }
+    },
+    "confusion_matrix": [
+      [
+        3709,
+        73,
+        81,
+        27,
+        0
+      ],
+      [
+        55,
+        1697,
+        10,
+        7,
+        0
+      ],
+      [
+        82,
+        20,
+        1423,
+        28,
+        0
+      ],
+      [
+        32,
+        2,
+        36,
+        895,
+        0
+      ]
+    ]
+  },
+  "test": {
+    "n": 8088,
+    "accuracy": 0.9432492581602374,
+    "macro_precision": 0.9367534061506655,
+    "macro_recall": 0.9377738385254882,
+    "macro_f1": 0.9371867208304647,
+    "weighted_f1": 0.9431527908736698,
+    "miss_rate": 0.0,
+    "accuracy_on_detected": 0.9432492581602374,
+    "per_class": {
+      "D00": {
+        "precision": 0.9565439672801636,
+        "recall": 0.953375796178344,
+        "f1": 0.9549572540512952,
+        "support": 3925
+      },
+      "D10": {
+        "precision": 0.9413131900058106,
+        "recall": 0.9671641791044776,
+        "f1": 0.9540636042402827,
+        "support": 1675
+      },
+      "D20": {
+        "precision": 0.9193870752831446,
+        "recall": 0.8978529603122967,
+        "f1": 0.9084924292297564,
+        "support": 1537
+      },
+      "D40": {
+        "precision": 0.929769392033543,
+        "recall": 0.9327024185068349,
+        "f1": 0.9312335958005249,
+        "support": 951
+      }
+    },
+    "confusion_matrix": [
+      [
+        3742,
+        61,
+        94,
+        28,
+        0
+      ],
+      [
+        41,
+        1620,
+        5,
+        9,
+        0
+      ],
+      [
+        98,
+        29,
+        1380,
+        30,
+        0
+      ],
+      [
+        31,
+        11,
+        22,
+        887,
+        0
+      ]
+    ]
+  }
+}

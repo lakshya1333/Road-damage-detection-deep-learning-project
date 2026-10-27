@@ -1,0 +1,50 @@
+{
+  "data_root": "/kaggle/input/datasets/aliabdelmenam/rdd-2022/RDD_SPLIT",
+  "class_mapping": {
+    "0": "D00",
+    "1": "D10",
+    "2": "D20",
+    "4": "D40"
+  },
+  "class_mapping_source": "5-class export (D44 'other corruption' id 3 dropped)",
+  "dropped_labels": {
+    "3": 10705,
+    "degenerate": 1
+  },
+  "images_per_split": {
+    "test": 5758,
+    "train": 26869,
+    "val": 5758
+  },
+  "damaged_images_per_split": {
+    "test": 3543,
+    "train": 16731,
+    "val": 3493
+  },
+  "instances_per_split": {
+    "test": 8088,
+    "train": 38741,
+    "val": 8177
+  },
+  "instances_per_class_per_split": {
+    "test": {
+      "D00": 3925,
+      "D10": 1675,
+      "D20": 1537,
+      "D40": 951
+    },
+    "train": {
+      "D00": 18201,
+      "D10": 8386,
+      "D20": 7526,
+      "D40": 4628
+    },
+    "val": {
+      "D00": 3890,
+      "D10": 1769,
+      "D20": 1553,
+      "D40": 965
+    }
+  },
+  "seed": 42
+}
