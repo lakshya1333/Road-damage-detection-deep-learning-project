@@ -1,42 +1,53 @@
-# Road Damage Detection - ICT-4442 Phase 2
+# Road Damage Detection & Classification — ICT-4442 Final
 
-This repository contains the reproducible preprocessing and baseline-model work for the ICT-4442 road-damage project.
+Four deep-learning families compared on **RDD2022** (D00 longitudinal, D10 transverse, D20 alligator, D40 pothole) under **one split and one common protocol**.
 
-## Team ownership
+| Model | Family | Owner | Script | Kaggle notebook |
+|---|---|---|---|---|
+| A — ResNet-50 | CNN classifier | Lakshya Jain | `src/models/train_classifier.py --arch resnet50` | `notebooks/01_resnet50_classifier_Lakshya.ipynb` |
+| B — YOLOv8s | One-stage detector | Dhruv Maheshwari | `src/models/train_yolo.py` | `notebooks/02_yolov8_detector_Dhruv.ipynb` |
+| C — U-Net (ResNet-34) | Encoder–decoder segmentation | Kumar Kshitij | `src/models/train_unet.py` | `notebooks/03_unet_segmentation_Kumar.ipynb` |
+| D — ViT-B/16 | Attention / transformer | MANAS LAXMAN KUDIPADY | `src/models/train_classifier.py --arch vit_b_16` | `notebooks/04_vit_transformer_Manas.ipynb` |
 
-- Lakshya Jain: ResNet-50/MobileNetV2 classification model
-- Dhruv Maheshwari: YOLOv8 object detector
-- Kumar Kshitij: preprocessing, splits, and segmentation investigation
-- MANAS LAXMAN KUDIPADY: evaluation, transformer investigation, and report integration
+## Repository layout
 
-## Dataset
+```
+src/common/dataset.py        shared data contract: dataset discovery, class mapping, manifest, crops
+src/common/metrics.py        common-protocol metrics, IoU, segmentation scores, latency
+src/data/build_manifest.py   STEP 1 for everyone: identical split + class map → results/data/
+src/models/                  one training script per model family (writes results/<model>/)
+src/evaluation/compare_models.py   single comparison table, McNemar tests, error analysis, figures
+src/inference/video_infer.py dashcam/video monitoring with the trained detector
+notebooks/                   Kaggle notebooks (one per member + final comparison)
+reporting/                   builds the Part C report (.docx) and slides (.pptx) from results/
+```
 
-Use the official RDD2022 release. Download it separately and place the extracted dataset under `data/raw/rdd2022/`. Do not commit the raw images or annotations. The preparation script searches recursively for `.jpg` images and matching Pascal VOC `.xml` files, so the original country/train folder layout can be retained.
+## Common evaluation protocol
 
-The dataset contains four labels: D00 (longitudinal crack), D10 (transverse crack), D20 (alligator crack), and D40 (pothole).
+Every ground-truth damage instance of the shared **test** split gets one predicted class:
 
-## Setup
+* **Classifiers** (ResNet-50, ViT): the GT crop (+10 % context) is classified.
+* **YOLOv8**: class of the predicted box with the highest IoU, if IoU ≥ 0.5, else *missed*.
+* **U-Net**: majority predicted damage class inside the GT box, if ≥ 5 % of the box is damage, else *missed*.
+
+Missed instances count as false negatives. We report accuracy, macro precision/recall/F1, miss rate, per-class F1, params and batch-1 latency, plus native metrics (mAP for YOLOv8, mIoU/Dice for U-Net).
+
+## Reproduce (Kaggle, GPU T4, dataset `aliabdelmenam/rdd-2022`)
 
 ```bash
-python -m venv .venv
-# Windows PowerShell
-.venv\\Scripts\\Activate.ps1
-# macOS/Linux
-# source .venv/bin/activate
 pip install -r requirements.txt
+python -m src.data.build_manifest --out results/data --plot                     # everyone, same output
+python -m src.models.train_classifier --arch resnet50 --out results/resnet50     # A
+python -m src.models.train_yolo --model yolov8s.pt --epochs 30 --out results/yolov8   # B
+python -m src.models.train_unet --epochs 15 --size 512 --out results/unet        # C
+python -m src.models.train_classifier --arch vit_b_16 --lr 5e-5 --out results/vit_b16 # D
+python -m src.evaluation.compare_models --results results --out results/final --gallery
+python reporting/build_report.py  --results results --out ICT4442_Final_Report.docx
+python reporting/build_slides.py  --results results --out ICT4442_Final_Presentation.pptx
 ```
 
-## Prepare the detector dataset
+All randomness is seeded (42). Do not commit the dataset or `*.pt` weights (see `.gitignore`); commit `results/**/metrics.json`, CSVs and PNGs.
 
-```bash
-python src/data/prepare_rdd2022.py --input data/raw/rdd2022 --output data/processed/rdd2022_yolo --seed 42
-```
+## Phase-2 history
 
-This creates a YOLO directory, `data.yaml`, `splits.csv`, and `dataset_stats.csv`. Review the generated sample images before training.
-
-## Reproducibility rules
-
-- Keep seed `42` unless the team documents a change.
-- Never place test images in training folders.
-- Record Python, PyTorch, Ultralytics, device, image size, epochs, batch size, and training time.
-- Do not report metrics until they are produced by a saved run.
+`src/models/rdd2022-compare-base-models.ipynb` and `yolov8-on-rdd2022.ipynb` are the Phase-2 runs. **Note:** the “Proposed Dual-Branch” row printed in `rdd2022-compare-base-models.ipynb` was *not* produced by a training run (the notebook prints “NO RE-TRAINING PERFORMED”) and must not be reported.

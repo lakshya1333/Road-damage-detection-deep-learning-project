@@ -1,22 +1,13 @@
-# Python
 __pycache__/
-*.py[cod]
+*.pyc
 .venv/
-.env
-
-# Data and generated outputs
-data/raw/
-data/processed/
-runs/
-outputs/
+data/
 *.pt
 *.pth
-*.onnx
-
-# Notebooks and editor files
+*.u8
+*.done
+*.zip
+results/**/train/weights/
+results/**/samples/
+*.cache
 .ipynb_checkpoints/
-.vscode/
-
-# OS files
-.DS_Store
-Thumbs.db
