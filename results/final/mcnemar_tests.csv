@@ -1,0 +1,7 @@
+A,B,A right/B wrong,A wrong/B right,p_value
+ResNet-50,YOLOv8s,3548,46,0.0
+ResNet-50,U-Net (resnet34),2042,106,0.0
+ResNet-50,ViT-B/16,156,160,0.8660170861232843
+YOLOv8s,U-Net (resnet34),358,1924,2.3790490810045295e-258
+YOLOv8s,ViT-B/16,39,3545,0.0
+U-Net (resnet34),ViT-B/16,120,2060,0.0

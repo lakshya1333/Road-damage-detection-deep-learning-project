@@ -1,0 +1,162 @@
+{
+  "model": "ViT-B/16",
+  "family": "Attention / Transformer",
+  "task": "damage-instance classification (GT crop)",
+  "arch": "vit_b_16",
+  "params": 85801732,
+  "latency_ms_bs1": 15.1881057999708,
+  "device": "Tesla T4",
+  "train_minutes": 67.22849222421647,
+  "epochs_run": 10,
+  "best_val_macro_f1": 0.9425948919036087,
+  "config": {
+    "lr": 5e-05,
+    "weight_decay": 0.05,
+    "batch": 64,
+    "size": 224,
+    "epochs": 10,
+    "optimizer": "AdamW",
+    "schedule": "cosine + 1 warm-up epoch",
+    "loss": "class-weighted cross-entropy, label smoothing 0.05",
+    "seed": 42,
+    "pretrained": true,
+    "augmentation": "RandomResizedCrop(0.75-1), HorizontalFlip, ColorJitter"
+  },
+  "samples": {
+    "train": 38741,
+    "val": 8177,
+    "test": 8088
+  },
+  "val": {
+    "n": 8177,
+    "accuracy": 0.9468020056255351,
+    "macro_precision": 0.9411088961100965,
+    "macro_recall": 0.944207391471291,
+    "macro_f1": 0.9425948919036087,
+    "weighted_f1": 0.9469040441566339,
+    "miss_rate": 0.0,
+    "accuracy_on_detected": 0.9468020056255351,
+    "per_class": {
+      "D00": {
+        "precision": 0.9614984391259105,
+        "recall": 0.9501285347043702,
+        "f1": 0.9557796741660202,
+        "support": 3890
+      },
+      "D10": {
+        "precision": 0.9549295774647887,
+        "recall": 0.958168456755229,
+        "f1": 0.9565462753950339,
+        "support": 1769
+      },
+      "D20": {
+        "precision": 0.904375,
+        "recall": 0.9317450096587251,
+        "f1": 0.9178560101490644,
+        "support": 1553
+      },
+      "D40": {
+        "precision": 0.9436325678496869,
+        "recall": 0.9367875647668393,
+        "f1": 0.9401976079043162,
+        "support": 965
+      }
+    },
+    "confusion_matrix": [
+      [
+        3696,
+        63,
+        105,
+        26,
+        0
+      ],
+      [
+        52,
+        1695,
+        16,
+        6,
+        0
+      ],
+      [
+        71,
+        13,
+        1447,
+        22,
+        0
+      ],
+      [
+        25,
+        4,
+        32,
+        904,
+        0
+      ]
+    ]
+  },
+  "test": {
+    "n": 8088,
+    "accuracy": 0.9437438180019783,
+    "macro_precision": 0.9359900472486934,
+    "macro_recall": 0.9411506053821207,
+    "macro_f1": 0.9385260212162141,
+    "weighted_f1": 0.9437595066442799,
+    "miss_rate": 0.0,
+    "accuracy_on_detected": 0.9437438180019783,
+    "per_class": {
+      "D00": {
+        "precision": 0.9605059370160042,
+        "recall": 0.9480254777070064,
+        "f1": 0.9542249006282857,
+        "support": 3925
+      },
+      "D10": {
+        "precision": 0.9491525423728814,
+        "recall": 0.9695522388059702,
+        "f1": 0.9592439456585942,
+        "support": 1675
+      },
+      "D20": {
+        "precision": 0.9040207522697795,
+        "recall": 0.9069616135328562,
+        "f1": 0.9054887950633322,
+        "support": 1537
+      },
+      "D40": {
+        "precision": 0.9302809573361083,
+        "recall": 0.9400630914826499,
+        "f1": 0.9351464435146444,
+        "support": 951
+      }
+    },
+    "confusion_matrix": [
+      [
+        3721,
+        64,
+        111,
+        29,
+        0
+      ],
+      [
+        33,
+        1624,
+        10,
+        8,
+        0
+      ],
+      [
+        98,
+        15,
+        1394,
+        30,
+        0
+      ],
+      [
+        22,
+        8,
+        27,
+        894,
+        0
+      ]
+    ]
+  }
+}
