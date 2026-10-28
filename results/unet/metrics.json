@@ -1,0 +1,133 @@
+{
+  "model": "U-Net (resnet34)",
+  "family": "Encoder-decoder segmentation",
+  "task": "pixel-level damage-region segmentation (box-derived masks)",
+  "params": 24436949,
+  "latency_ms_bs1": 17.519906839952455,
+  "device": "Tesla T4",
+  "train_minutes": 182.46441609064738,
+  "epochs_run": 12,
+  "config": {
+    "encoder": "resnet34",
+    "size": 512,
+    "epochs": 12,
+    "batch": 12,
+    "lr": 0.0003,
+    "optimizer": "AdamW",
+    "schedule": "OneCycle",
+    "loss": "weighted cross-entropy (background weight 0.5) + multiclass Dice",
+    "augmentation": "horizontal flip, brightness/contrast jitter",
+    "background_fraction": 0.2,
+    "pretrained": true,
+    "seed": 42
+  },
+  "segmentation_val": {
+    "per_class_iou": {
+      "background": 0.9721180732878058,
+      "D00": 0.5320010048366132,
+      "D10": 0.5018304230752891,
+      "D20": 0.6231776923110363,
+      "D40": 0.4379186947015893
+    },
+    "per_class_dice": {
+      "background": 0.9858619384458502,
+      "D00": 0.6945178275432669,
+      "D10": 0.6682917263690717,
+      "D20": 0.7678490103246463,
+      "D40": 0.609100773660183
+    },
+    "mIoU_damage": 0.523731953731132,
+    "mDice_damage": 0.6849398344742919,
+    "mIoU_all": 0.6134091776424667,
+    "pixel_accuracy": 0.9703715457896385,
+    "binary_damage_iou": 0.6375926059070974
+  },
+  "segmentation_test": {
+    "per_class_iou": {
+      "background": 0.972099184229305,
+      "D00": 0.5242464277695729,
+      "D10": 0.5337199663981194,
+      "D20": 0.6199560422700697,
+      "D40": 0.4223888757194037
+    },
+    "per_class_dice": {
+      "background": 0.9858522248810733,
+      "D00": 0.6878762098025077,
+      "D10": 0.695980984914136,
+      "D20": 0.7653985985956948,
+      "D40": 0.5939147625936985
+    },
+    "mIoU_damage": 0.5250778280392915,
+    "mDice_damage": 0.6857926389765092,
+    "mIoU_all": 0.6144820992772942,
+    "pixel_accuracy": 0.9702097683078756,
+    "binary_damage_iou": 0.6385129224305435
+  },
+  "test": {
+    "n": 8088,
+    "accuracy": 0.7038822947576657,
+    "macro_precision": 0.8541333150695245,
+    "macro_recall": 0.6990794469520191,
+    "macro_f1": 0.7643835530234335,
+    "weighted_f1": 0.7731636927346465,
+    "miss_rate": 0.17841246290801183,
+    "accuracy_on_detected": 0.8567343867569601,
+    "per_class": {
+      "D00": {
+        "precision": 0.9039029189898328,
+        "recall": 0.7021656050955414,
+        "f1": 0.7903642099225695,
+        "support": 3925
+      },
+      "D10": {
+        "precision": 0.8750969743987588,
+        "recall": 0.6734328358208955,
+        "f1": 0.7611336032388664,
+        "support": 1675
+      },
+      "D20": {
+        "precision": 0.7354562155541947,
+        "recall": 0.7813923227065712,
+        "f1": 0.7577287066246057,
+        "support": 1537
+      },
+      "D40": {
+        "precision": 0.9020771513353115,
+        "recall": 0.6393270241850684,
+        "f1": 0.7483076923076923,
+        "support": 951
+      }
+    },
+    "confusion_matrix": [
+      [
+        2756,
+        110,
+        210,
+        27,
+        822
+      ],
+      [
+        138,
+        1128,
+        116,
+        4,
+        289
+      ],
+      [
+        129,
+        36,
+        1201,
+        35,
+        136
+      ],
+      [
+        26,
+        15,
+        106,
+        608,
+        196
+      ]
+    ]
+  },
+  "matching": "majority damage class inside GT box, missed if < 5% of box predicted as damage"
+}
